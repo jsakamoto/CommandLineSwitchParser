@@ -18,7 +18,7 @@ There are no need to annotate your option class with any attributes.
 // Declare your own class that represents command line switch.
 public class Option1
 {
-    public bool Recuruce { get; set; }
+    public bool Recursive { get; set; }
 
     public int Port { get; set; } = 8080;
 }
@@ -28,13 +28,13 @@ public static void Main(string[] args)
 {
   var options = CommandLineSwitch.Parse<Option1>(ref args);
 
-  // Short switch matches a initial of option class property name.
-  Console.WriteLine(options.Recuruce); // True
+  // Short switch matches an initial of option class property name.
+  Console.WriteLine(options.Recursive); // True
 
   // Long switch matches a full name of option class property name.
   Console.WriteLine(options.Port);     // 80
 
-  // Switches in "args" is stripped.
+  // Switches in "args" are stripped.
   Console.WriteLine(args[0])           // "c:\wwwroot\inetpub"
 }
 
