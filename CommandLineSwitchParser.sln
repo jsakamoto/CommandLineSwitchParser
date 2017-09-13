@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26014.0
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandLineSwitchParser", "CommandLineSwitchParser\CommandLineSwitchParser.csproj", "{6D25E28E-A135-4CFB-9BED-37CEF793FB93}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommandLineSwitchParser.Test", "CommandLineSwitchParser.Test\CommandLineSwitchParser.Test.csproj", "{F70034C1-3E5F-4058-8A18-FA407081BBB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandLineSwitchParser.Test", "CommandLineSwitchParser.Test\CommandLineSwitchParser.Test.csproj", "{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommandLineSwitchParser", "CommandLineSwitchParser\CommandLineSwitchParser.csproj", "{287D62F6-2B1F-4345-9680-B122641A5AF4}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "README", "README", "{A2205054-FBE4-4FC7-830B-4373E0A2FC22}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "README", "README", "{8077A0DA-61CF-4A42-AABD-39DD4391E415}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
@@ -18,16 +18,19 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6D25E28E-A135-4CFB-9BED-37CEF793FB93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6D25E28E-A135-4CFB-9BED-37CEF793FB93}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6D25E28E-A135-4CFB-9BED-37CEF793FB93}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6D25E28E-A135-4CFB-9BED-37CEF793FB93}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F70034C1-3E5F-4058-8A18-FA407081BBB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F70034C1-3E5F-4058-8A18-FA407081BBB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F70034C1-3E5F-4058-8A18-FA407081BBB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F70034C1-3E5F-4058-8A18-FA407081BBB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{287D62F6-2B1F-4345-9680-B122641A5AF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{287D62F6-2B1F-4345-9680-B122641A5AF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{287D62F6-2B1F-4345-9680-B122641A5AF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{287D62F6-2B1F-4345-9680-B122641A5AF4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C0187347-A28F-4C1B-80CB-EA2FE13AC467}
 	EndGlobalSection
 EndGlobal
