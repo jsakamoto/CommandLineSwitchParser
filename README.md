@@ -10,7 +10,7 @@ There are no need to annotate your option class with any attributes.
 
 ## Install
 
-    PM> Install-Package CommandLineSwitchParser
+    PM> Install-Package CommandLineSwitchParser -pre
 
 ## Example
 
