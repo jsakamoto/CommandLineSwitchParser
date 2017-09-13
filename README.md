@@ -1,4 +1,4 @@
-# CommandLineSwitchParser [![NuGet Package](https://img.shields.io/nuget/v/CommandLineSwitchParser.svg)](https://www.nuget.org/packages/CommandLineSwitchParser/)
+# CommandLineSwitchParser [![NuGet Package](https://img.shields.io/nuget/v/CommandLineSwitchParser.svg)](https://www.nuget.org/packages/CommandLineSwitchParser/) [![Build status](https://ci.appveyor.com/api/projects/status/kvqg7m79hfxhtf5o?svg=true)](https://ci.appveyor.com/project/jsakamoto/commandlineswitchparser)
 
 ## Summary
 
