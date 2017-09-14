@@ -29,7 +29,7 @@ namespace CommandLineSwitchParser
                 case ErrorTypes.UnkdonwOption:
                     return $"{this.OptionName} is unknown switch/option.";
                 case ErrorTypes.MissingParameter:
-                    break;
+                    return $"The parameter of {this.OptionName} is missing.";
                 case ErrorTypes.InvalidFormatParameter:
                     break;
                 default:

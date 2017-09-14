@@ -32,7 +32,8 @@ namespace CommandLineSwitchParser
                     }
                     else
                     {
-                        enumerator.MoveNext();
+                        var endOfArgs = !enumerator.MoveNext();
+                        if (endOfArgs) throw new InvalidCommandLineSwitchException(ErrorTypes.MissingParameter, arg, null, optDef.PropInfo.PropertyType);
                         var convertedValue = Convert.ChangeType(enumerator.Current, optDef.PropInfo.PropertyType);
                         optDef.PropInfo.SetValue(options, convertedValue);
                     }
