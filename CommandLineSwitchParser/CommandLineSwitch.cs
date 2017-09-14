@@ -37,6 +37,10 @@ namespace CommandLineSwitchParser
                         optDef.PropInfo.SetValue(options, convertedValue);
                     }
                 }
+                else if (result == FindOptDefResult.NotFound)
+                {
+                    throw new InvalidCommandLineSwitchException(ErrorTypes.UnkdonwOption, arg, null, null);
+                }
             }
 
             args = omittedArgs.ToArray();

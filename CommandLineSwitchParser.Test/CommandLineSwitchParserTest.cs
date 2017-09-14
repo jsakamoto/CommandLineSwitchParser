@@ -32,5 +32,24 @@ namespace CommandLineSwitchParser.Test
             options.Port.Is(80);
             args.Is(@"c:\wwwroot\inetpub");
         }
+
+        [Fact(DisplayName = "Parse() - Unknown option")]
+        public void Parse_UnknownOption_Test()
+        {
+            var commandline = "-p 80 -z USWest -r -s";
+            var args = commandline.Split(' ');
+            var e = Assert.Throws<InvalidCommandLineSwitchException>(() =>
+            {
+                var options = CommandLineSwitch.Parse<Option1>(ref args);
+            });
+
+            e.Message.Is("-z is unknown switch/option.");
+            e.ParserError.ErrorType.Is(ErrorTypes.UnkdonwOption);
+            e.ParserError.OptionName.Is("-z");
+            e.ParserError.Parameter.IsNull();
+            e.ParserError.ExpectedParameterType.IsNull();
+
+            args.Is(commandline.Split(' '));
+        }
     }
 }
