@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Linq;
 using CommandLineSwitchParser.Test.Fixture;
 using Xunit;
 
 namespace CommandLineSwitchParser.Test
 {
-    public class CommandLineSwitchParserTest
+    public class ParseTest
     {
-        [Fact]
+        [Fact(DisplayName = "Parse() - empty args")]
         public void EmptyArgs_Test()
         {
             var args = new string[] { };
@@ -17,7 +16,7 @@ namespace CommandLineSwitchParser.Test
             args.Is();
         }
 
-        [Fact]
+        [Fact(DisplayName = "Parse() - complex args")]
         public void ComplexArgs_Test()
         {
             var args = new[] { "--port", "80", @"c:\wwwroot\inetpub", "-r" };
