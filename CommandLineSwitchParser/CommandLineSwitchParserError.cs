@@ -33,6 +33,8 @@ namespace CommandLineSwitchParser
                     return $"The parameter of {this.OptionName} is missing.";
                 case ErrorTypes.InvalidParameterFormat:
                     return $"The parameter of {this.OptionName} is not {this.GetParameterTypeText(this.ExpectedParameterType)}.";
+                case ErrorTypes.ParameterOverflow:
+                    return $"The parameter of {this.OptionName} is too large or too small.";
                 default:
                     break;
             }

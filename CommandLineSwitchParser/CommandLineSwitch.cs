@@ -43,6 +43,10 @@ namespace CommandLineSwitchParser
                         {
                             throw new InvalidCommandLineSwitchException(ErrorTypes.InvalidParameterFormat, arg, enumerator.Current, optDef.PropInfo.PropertyType, e);
                         }
+                        catch (OverflowException e)
+                        {
+                            throw new InvalidCommandLineSwitchException(ErrorTypes.ParameterOverflow, arg, enumerator.Current, optDef.PropInfo.PropertyType, e);
+                        }
                     }
                 }
                 else if (result == FindOptDefResult.NotFound)

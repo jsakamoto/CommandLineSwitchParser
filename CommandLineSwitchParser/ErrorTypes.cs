@@ -4,6 +4,7 @@
     {
         UnkdonwOption,
         MissingParameter,
-        InvalidParameterFormat
+        InvalidParameterFormat,
+        ParameterOverflow,
     }
 }
