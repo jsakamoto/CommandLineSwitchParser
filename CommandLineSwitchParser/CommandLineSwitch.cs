@@ -6,23 +6,6 @@ using System.Text.RegularExpressions;
 
 namespace CommandLineSwitchParser
 {
-    internal enum OptionType
-    {
-        Switch,
-        Parameter
-    }
-
-    internal class OptionDef
-    {
-        public string ShortName { get; set; }
-
-        public string LongName { get; set; }
-
-        public OptionType Type { get; set; }
-
-        public PropertyInfo PropInfo { get; set; }
-    }
-
     public static class CommandLineSwitch
     {
         public static TOptions Parse<TOptions>(ref string[] args) where TOptions : new()
