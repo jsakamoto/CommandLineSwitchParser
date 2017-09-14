@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using CommandLineSwitchParser.Test.Fixture;
 using Xunit;
 
 namespace CommandLineSwitchParser.Test
@@ -67,7 +68,60 @@ namespace CommandLineSwitchParser.Test
             e.ParserError.OptionName.Is("--port");
             e.ParserError.Parameter.IsNull();
             e.ParserError.ExpectedParameterType.Is(typeof(int));
+            args.Is(commandline.Split(' '));
+        }
 
+        [Fact(DisplayName = "Parse() - Invalid parameter format - int")]
+        public void Parse_InvalidParameterFormat_Int_Test()
+        {
+            var commandline = "-p http://localhost/ -z";
+            var args = commandline.Split(' ');
+            var e = Assert.Throws<InvalidCommandLineSwitchException>(() =>
+            {
+                var options = CommandLineSwitch.Parse<Option1>(ref args);
+            });
+
+            e.Message.Is("The parameter of -p is not an integer.");
+            e.ParserError.ErrorType.Is(ErrorTypes.InvalidParameterFormat);
+            e.ParserError.OptionName.Is("-p");
+            e.ParserError.Parameter.Is("http://localhost/");
+            e.ParserError.ExpectedParameterType.Is(typeof(int));
+            args.Is(commandline.Split(' '));
+        }
+
+        [Fact(DisplayName = "Parse() - Invalid parameter format - date/time")]
+        public void Parse_InvalidParameterFormat_DateTime_Test()
+        {
+            var commandline = "-c Today -m hello";
+            var args = commandline.Split(' ');
+            var e = Assert.Throws<InvalidCommandLineSwitchException>(() =>
+            {
+                var options = CommandLineSwitch.Parse<VCSCommandOptions>(ref args);
+            });
+
+            e.Message.Is("The parameter of -c is not a date / time.");
+            e.ParserError.ErrorType.Is(ErrorTypes.InvalidParameterFormat);
+            e.ParserError.OptionName.Is("-c");
+            e.ParserError.Parameter.Is("Today");
+            e.ParserError.ExpectedParameterType.Is(typeof(DateTime));
+            args.Is(commandline.Split(' '));
+        }
+
+        [Fact(DisplayName = "Parse() - Invalid parameter format - decimal")]
+        public void Parse_InvalidParameterFormat_Decimal_Test()
+        {
+            var commandline = "-c 2017-09-14 -r Hello -z";
+            var args = commandline.Split(' ');
+            var e = Assert.Throws<InvalidCommandLineSwitchException>(() =>
+            {
+                var options = CommandLineSwitch.Parse<VCSCommandOptions>(ref args);
+            });
+
+            e.Message.Is("The parameter of -r is not a number.");
+            e.ParserError.ErrorType.Is(ErrorTypes.InvalidParameterFormat);
+            e.ParserError.OptionName.Is("-r");
+            e.ParserError.Parameter.Is("Hello");
+            e.ParserError.ExpectedParameterType.Is(typeof(decimal));
             args.Is(commandline.Split(' '));
         }
     }

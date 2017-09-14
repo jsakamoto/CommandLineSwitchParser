@@ -11,6 +11,12 @@ namespace CommandLineSwitchParser
         public CommandLineSwitchParserError ParserError { get; }
 
         internal InvalidCommandLineSwitchException(ErrorTypes errorType, string optionName, string parameter, Type expectedParameterType)
+            : this(errorType, optionName, parameter, expectedParameterType, null)
+        {
+        }
+
+        internal InvalidCommandLineSwitchException(ErrorTypes errorType, string optionName, string parameter, Type expectedParameterType, Exception innerException)
+            : base("", innerException)
         {
             this.ParserError = new CommandLineSwitchParserError(errorType, optionName, parameter, expectedParameterType);
         }
