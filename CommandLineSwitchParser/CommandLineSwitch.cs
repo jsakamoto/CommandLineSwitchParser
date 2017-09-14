@@ -60,6 +60,22 @@ namespace CommandLineSwitchParser
             return options;
         }
 
+        public static bool TryParse<TOptions>(ref string[] args, out TOptions options, out CommandLineSwitchParserError err) where TOptions : new()
+        {
+            err = null;
+            options = default(TOptions);
+            try
+            {
+                options = Parse<TOptions>(ref args);
+                return true;
+            }
+            catch (InvalidCommandLineSwitchException e)
+            {
+                err = e.ParserError;
+                return false;
+            }
+        }
+
         private static OptionDef[] BuildOptionDefs(object options)
         {
             return options
