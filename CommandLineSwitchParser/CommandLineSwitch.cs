@@ -32,10 +32,26 @@ namespace CommandLineSwitchParser
                     }
                     else
                     {
-                        enumerator.MoveNext();
-                        var convertedValue = Convert.ChangeType(enumerator.Current, optDef.PropInfo.PropertyType);
-                        optDef.PropInfo.SetValue(options, convertedValue);
+                        var endOfArgs = !enumerator.MoveNext();
+                        if (endOfArgs) throw new InvalidCommandLineSwitchException(ErrorTypes.MissingParameter, arg, null, optDef.PropInfo.PropertyType);
+                        try
+                        {
+                            var convertedValue = Convert.ChangeType(enumerator.Current, optDef.PropInfo.PropertyType);
+                            optDef.PropInfo.SetValue(options, convertedValue);
+                        }
+                        catch (FormatException e)
+                        {
+                            throw new InvalidCommandLineSwitchException(ErrorTypes.InvalidParameterFormat, arg, enumerator.Current, optDef.PropInfo.PropertyType, e);
+                        }
+                        catch (OverflowException e)
+                        {
+                            throw new InvalidCommandLineSwitchException(ErrorTypes.ParameterOverflow, arg, enumerator.Current, optDef.PropInfo.PropertyType, e);
+                        }
                     }
+                }
+                else if (result == FindOptDefResult.NotFound)
+                {
+                    throw new InvalidCommandLineSwitchException(ErrorTypes.UnkdonwOption, arg, null, null);
                 }
             }
 
