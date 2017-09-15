@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Reflection;
 
 namespace CommandLineSwitchParser
 {
@@ -55,6 +57,12 @@ namespace CommandLineSwitchParser
             }
 
             if (Regex.IsMatch(typeName, @"^System\.(Double|Single|Decimal)$")) return "a number";
+
+            if (expectedParameterType.GetTypeInfo().IsEnum)
+            {
+                var enumNames = string.Join(", ", Enum.GetNames(expectedParameterType).Select(name => name.ToLower()));
+                return $"the one of {enumNames}";
+            }
 
             return expectedParameterType.Name;
         }
