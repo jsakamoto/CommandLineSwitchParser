@@ -26,6 +26,15 @@ namespace CommandLineSwitchParser.Test
             args.Is(@"c:\wwwroot\inetpub");
         }
 
+        [Fact(DisplayName = "Parse() - enum args")]
+        public void Parse_Enum_Test()
+        {
+            var args = "-t svn commit".Split(' ');
+            var options = CommandLineSwitch.Parse<VCSCommandOptions>(ref args);
+            options.Type.Is(VCSTypes.SVN);
+            args.Is("commit");
+        }
+
         [Fact(DisplayName = "Parse() - Unknown option")]
         public void Parse_UnknownOption_Test()
         {
@@ -114,6 +123,24 @@ namespace CommandLineSwitchParser.Test
             e.ParserError.OptionName.Is("-r");
             e.ParserError.Parameter.Is("Hello");
             e.ParserError.ExpectedParameterType.Is(typeof(decimal));
+            args.Is(commandline.Split(' '));
+        }
+
+        [Fact(DisplayName = "Parse() - Invalid parameter format - enum")]
+        public void Parse_InvalidParameterFormat_Enum_Test()
+        {
+            var commandline = "-c 2017-09-14 --type Git -z";
+            var args = commandline.Split(' ');
+            var e = Assert.Throws<InvalidCommandLineSwitchException>(() =>
+            {
+                var options = CommandLineSwitch.Parse<VCSCommandOptions>(ref args);
+            });
+
+            e.Message.Is("The parameter of --type is not the one of git, svn.");
+            e.ParserError.ErrorType.Is(ErrorTypes.InvalidParameterFormat);
+            e.ParserError.OptionName.Is("--type");
+            e.ParserError.Parameter.Is("Git");
+            e.ParserError.ExpectedParameterType.Is(typeof(VCSTypes));
             args.Is(commandline.Split(' '));
         }
 

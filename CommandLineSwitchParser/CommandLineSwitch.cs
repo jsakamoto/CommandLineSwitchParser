@@ -36,8 +36,25 @@ namespace CommandLineSwitchParser
                         if (endOfArgs) throw new InvalidCommandLineSwitchException(ErrorTypes.MissingParameter, arg, null, optDef.PropInfo.PropertyType);
                         try
                         {
-                            var convertedValue = Convert.ChangeType(enumerator.Current, optDef.PropInfo.PropertyType);
-                            optDef.PropInfo.SetValue(options, convertedValue);
+                            var optionParam = enumerator.Current;
+                            var propType = optDef.PropInfo.PropertyType;
+
+                            if (propType.GetTypeInfo().IsEnum)
+                            {
+                                var enumNameToValues = Enum.GetNames(propType)
+                                    .ToDictionary(name => name.ToLower(), name => Enum.Parse(propType, name));
+                                if (enumNameToValues.TryGetValue(optionParam, out var convertedValue))
+                                {
+                                    optDef.PropInfo.SetValue(options, convertedValue);
+                                }
+                                else throw new FormatException();
+                            }
+
+                            else
+                            {
+                                var convertedValue = Convert.ChangeType(optionParam, propType);
+                                optDef.PropInfo.SetValue(options, convertedValue);
+                            }
                         }
                         catch (FormatException e)
                         {
