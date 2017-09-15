@@ -95,7 +95,7 @@ namespace CommandLineSwitchParser
 
         private static OptionDef[] BuildOptionDefs(object options)
         {
-            return options
+            var optionDefs = options
                 .GetType()
                 .GetRuntimeProperties()
                 .Select(prop => new OptionDef
@@ -106,6 +106,18 @@ namespace CommandLineSwitchParser
                     PropInfo = prop
                 })
                 .ToArray();
+
+            // Clear ambiguous short name.
+            var ambiguousDefs = optionDefs
+                .GroupBy(d => d.ShortName)
+                .Where(g => g.Count() > 1)
+                .SelectMany(g => g);
+            foreach (var ambiguousDef in ambiguousDefs)
+            {
+                ambiguousDef.ShortName = null;
+            }
+
+            return optionDefs;
         }
 
         private enum FindOptDefResult

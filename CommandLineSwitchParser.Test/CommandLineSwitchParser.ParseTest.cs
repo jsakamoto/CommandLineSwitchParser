@@ -35,6 +35,27 @@ namespace CommandLineSwitchParser.Test
             args.Is("commit");
         }
 
+        [Fact(DisplayName = "Parse() - long name only")]
+        public void Parse_LongNameOnly_Test()
+        {
+            var args = "http://localhost:32767 --authenticationtype cookie --allowanonymous".Split(' ');
+            var options = CommandLineSwitch.Parse<HttpServerOptions>(ref args);
+            options.AuthenticationType.Is(AuthenticationType.Cookie);
+            options.AllowAnonymous.IsTrue();
+
+        }
+
+        [Fact(DisplayName = "Parse() - long name only - ambiguous error")]
+        public void Parse_LongNameOnly_Ambiguous_Test()
+        {
+            var args = "http://localhost:32767 -a".Split(' ');
+            var e = Assert.Throws<InvalidCommandLineSwitchException>(() =>
+            {
+                var options = CommandLineSwitch.Parse<HttpServerOptions>(ref args);
+            });
+            e.ParserError.ErrorType.Is(ErrorTypes.UnkdonwOption);
+        }
+
         [Fact(DisplayName = "Parse() - Unknown option")]
         public void Parse_UnknownOption_Test()
         {
