@@ -15,7 +15,10 @@ There is no need to annotate your option class with any attributes.</Description
     <RepositoryUrl>https://github.com/jsakamoto/CommandLineSwitchParser.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>commandline switch options</PackageTags>
-    <PackageReleaseNotes>v.0.5.0
+    <PackageReleaseNotes>v.1.0.0
+- Official public 1st release.
+- Fix: typo of "ErrorTypes.UnknownOption".
+v.0.5.0
 - Add enum type property support!
 - Disallow ambiguous short name of switch/option.
 v.0.4.0
@@ -25,9 +28,9 @@ v.0.3.0
 - .NET Standard support
 v.0.2.0
 - Beta release</PackageReleaseNotes>
-    <Version>0.5.0.0-beta</Version>
-    <AssemblyVersion>0.5.0.0</AssemblyVersion>
-    <FileVersion>0.5.0.0</FileVersion>
+    <Version>1.0.0.0</Version>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
     <Copyright>Mozilla Public License, version 2.0, J.Sakamoto 2016-2017</Copyright>
   </PropertyGroup>
 
