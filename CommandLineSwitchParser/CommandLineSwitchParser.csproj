@@ -7,9 +7,9 @@
     <GeneratePackageOnBuild Condition="'$(Configuration)' == 'Release'">true</GeneratePackageOnBuild>
     <Authors>J.Sakamoto</Authors>
     <Company />
-    <Description>This is a simple parser for command line options.
+    <Description>This is a simple parser for command line options on .NET Framewrok &amp; .NET Core.
 What you should do is only define your option class and write code like "var option = CommandLineSwicth.Parse&lt;YourOptionClass&gt;(ref args);".
-There are no need to annotate your option class with any attributes.</Description>
+There is no need to annotate your option class with any attributes.</Description>
     <PackageLicenseUrl>https://github.com/jsakamoto/CommandLineSwitchParser/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/jsakamoto/CommandLineSwitchParser</PackageProjectUrl>
     <RepositoryUrl>https://github.com/jsakamoto/CommandLineSwitchParser.git</RepositoryUrl>
