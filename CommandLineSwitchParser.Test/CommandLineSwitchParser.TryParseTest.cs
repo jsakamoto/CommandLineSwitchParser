@@ -35,7 +35,7 @@ namespace CommandLineSwitchParser.Test
             var args = commandline.Split(' ');
             CommandLineSwitch.TryParse<HttpServerOptions>(ref args, out var options, out var err).IsFalse();
             options.IsNull();
-            err.ErrorType.Is(ErrorTypes.UnkdonwOption);
+            err.ErrorType.Is(ErrorTypes.UnknownOption);
             err.OptionName.Is("-z");
             err.Parameter.IsNull();
             err.ExpectedParameterType.IsNull();

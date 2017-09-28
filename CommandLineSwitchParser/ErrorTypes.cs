@@ -2,7 +2,7 @@
 {
     public enum ErrorTypes
     {
-        UnkdonwOption,
+        UnknownOption,
         MissingParameter,
         InvalidParameterFormat,
         ParameterOverflow,

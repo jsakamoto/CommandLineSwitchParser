@@ -68,7 +68,7 @@ namespace CommandLineSwitchParser
                 }
                 else if (result == FindOptDefResult.NotFound)
                 {
-                    throw new InvalidCommandLineSwitchException(ErrorTypes.UnkdonwOption, arg, null, null);
+                    throw new InvalidCommandLineSwitchException(ErrorTypes.UnknownOption, arg, null, null);
                 }
             }
 

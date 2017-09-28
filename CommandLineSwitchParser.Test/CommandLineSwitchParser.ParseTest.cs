@@ -53,7 +53,7 @@ namespace CommandLineSwitchParser.Test
             {
                 var options = CommandLineSwitch.Parse<HttpServerOptions>(ref args);
             });
-            e.ParserError.ErrorType.Is(ErrorTypes.UnkdonwOption);
+            e.ParserError.ErrorType.Is(ErrorTypes.UnknownOption);
         }
 
         [Fact(DisplayName = "Parse() - Unknown option")]
@@ -67,7 +67,7 @@ namespace CommandLineSwitchParser.Test
             });
 
             e.Message.Is("-z is unknown switch/option.");
-            e.ParserError.ErrorType.Is(ErrorTypes.UnkdonwOption);
+            e.ParserError.ErrorType.Is(ErrorTypes.UnknownOption);
             e.ParserError.OptionName.Is("-z");
             e.ParserError.Parameter.IsNull();
             e.ParserError.ExpectedParameterType.IsNull();

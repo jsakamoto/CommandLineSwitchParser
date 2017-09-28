@@ -29,7 +29,7 @@ namespace CommandLineSwitchParser
         {
             switch (this.ErrorType)
             {
-                case ErrorTypes.UnkdonwOption:
+                case ErrorTypes.UnknownOption:
                     return $"{this.OptionName} is unknown switch/option.";
                 case ErrorTypes.MissingParameter:
                     return $"The parameter of {this.OptionName} is missing.";
