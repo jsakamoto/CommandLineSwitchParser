@@ -4,7 +4,7 @@
 
 This is a simple parser for command line options on .NET Framework & .NET Core.
 
-What you should do is only define your option class and write code like "`var option = CommandLineSwicth.Parse<YourOptionClass>(ref args);`".
+What you should do is only define your option class and write code like "`var option = CommandLineSwitch.Parse<YourOptionClass>(ref args);`".
 
 There is no need to annotate your option class with any attributes.
 
