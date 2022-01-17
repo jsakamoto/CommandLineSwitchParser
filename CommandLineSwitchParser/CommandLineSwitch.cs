@@ -10,6 +10,14 @@ namespace CommandLineSwitchParser
     {
         public static TOptions Parse<TOptions>(ref string[] args) where TOptions : new()
         {
+            return Parse<TOptions>(ref args, _ => { });
+        }
+
+        public static TOptions Parse<TOptions>(ref string[] args, Action<CommandLineSwitchParserOptions> configureOptions) where TOptions : new()
+        {
+            var paserOptions = new CommandLineSwitchParserOptions();
+            configureOptions(paserOptions);
+
             var options = new TOptions();
             var optionDefs = BuildOptionDefs(options);
 
@@ -33,7 +41,7 @@ namespace CommandLineSwitchParser
                     else
                     {
                         var endOfArgs = !enumerator.MoveNext();
-                        if (endOfArgs) throw new InvalidCommandLineSwitchException(ErrorTypes.MissingParameter, arg, null, optDef.PropInfo.PropertyType);
+                        if (endOfArgs) throw new InvalidCommandLineSwitchException(ErrorTypes.MissingParameter, arg, null, optDef.PropInfo.PropertyType, paserOptions);
                         try
                         {
                             var optionParam = enumerator.Current;
@@ -41,11 +49,26 @@ namespace CommandLineSwitchParser
 
                             if (propType.GetTypeInfo().IsEnum)
                             {
-                                var enumNameToValues = Enum.GetNames(propType)
-                                    .ToDictionary(name => name.ToLower(), name => Enum.Parse(propType, name));
-                                if (enumNameToValues.TryGetValue(optionParam, out var convertedValue))
+                                var enumNames = Enum.GetNames(propType).ToArray();
+                                var originalEnumNameToValues = enumNames.ToDictionary(name => name, name => Enum.Parse(propType, name));
+                                var lowerCaseEnumNameToValues = originalEnumNameToValues.ToDictionary(item => item.Key.ToLower(), item => item.Value);
+                                var upperCaseEnumNameToValues = originalEnumNameToValues.ToDictionary(item => item.Key.ToUpper(), item => item.Value);
+
+                                if (paserOptions.EnumParserStyle.HasFlag(EnumParserStyle.IgnoreCase) && lowerCaseEnumNameToValues.TryGetValue(optionParam.ToLower(), out var convertedValue1))
                                 {
-                                    optDef.PropInfo.SetValue(options, convertedValue);
+                                    optDef.PropInfo.SetValue(options, convertedValue1);
+                                }
+                                else if (paserOptions.EnumParserStyle.HasFlag(EnumParserStyle.LowerCase) && lowerCaseEnumNameToValues.TryGetValue(optionParam, out var convertedValue2))
+                                {
+                                    optDef.PropInfo.SetValue(options, convertedValue2);
+                                }
+                                else if (paserOptions.EnumParserStyle.HasFlag(EnumParserStyle.UpperCase) && upperCaseEnumNameToValues.TryGetValue(optionParam, out var convertedValue3))
+                                {
+                                    optDef.PropInfo.SetValue(options, convertedValue3);
+                                }
+                                else if (paserOptions.EnumParserStyle.HasFlag(EnumParserStyle.OriginalCase) && originalEnumNameToValues.TryGetValue(optionParam, out var convertedValue4))
+                                {
+                                    optDef.PropInfo.SetValue(options, convertedValue4);
                                 }
                                 else throw new FormatException();
                             }
@@ -58,17 +81,17 @@ namespace CommandLineSwitchParser
                         }
                         catch (FormatException e)
                         {
-                            throw new InvalidCommandLineSwitchException(ErrorTypes.InvalidParameterFormat, arg, enumerator.Current, optDef.PropInfo.PropertyType, e);
+                            throw new InvalidCommandLineSwitchException(ErrorTypes.InvalidParameterFormat, arg, enumerator.Current, optDef.PropInfo.PropertyType, e, paserOptions);
                         }
                         catch (OverflowException e)
                         {
-                            throw new InvalidCommandLineSwitchException(ErrorTypes.ParameterOverflow, arg, enumerator.Current, optDef.PropInfo.PropertyType, e);
+                            throw new InvalidCommandLineSwitchException(ErrorTypes.ParameterOverflow, arg, enumerator.Current, optDef.PropInfo.PropertyType, e, paserOptions);
                         }
                     }
                 }
                 else if (result == FindOptDefResult.NotFound)
                 {
-                    throw new InvalidCommandLineSwitchException(ErrorTypes.UnknownOption, arg, null, null);
+                    throw new InvalidCommandLineSwitchException(ErrorTypes.UnknownOption, arg, null, null, paserOptions);
                 }
             }
 

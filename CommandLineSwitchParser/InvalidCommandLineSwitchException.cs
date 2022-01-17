@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CommandLineSwitchParser
 {
@@ -10,15 +8,15 @@ namespace CommandLineSwitchParser
 
         public CommandLineSwitchParserError ParserError { get; }
 
-        internal InvalidCommandLineSwitchException(ErrorTypes errorType, string optionName, string parameter, Type expectedParameterType)
-            : this(errorType, optionName, parameter, expectedParameterType, null)
+        internal InvalidCommandLineSwitchException(ErrorTypes errorType, string optionName, string parameter, Type expectedParameterType, CommandLineSwitchParserOptions parserOptions)
+            : this(errorType, optionName, parameter, expectedParameterType, null, parserOptions)
         {
         }
 
-        internal InvalidCommandLineSwitchException(ErrorTypes errorType, string optionName, string parameter, Type expectedParameterType, Exception innerException)
+        internal InvalidCommandLineSwitchException(ErrorTypes errorType, string optionName, string parameter, Type expectedParameterType, Exception innerException, CommandLineSwitchParserOptions parserOptions)
             : base("", innerException)
         {
-            this.ParserError = new CommandLineSwitchParserError(errorType, optionName, parameter, expectedParameterType);
+            this.ParserError = new CommandLineSwitchParserError(errorType, optionName, parameter, expectedParameterType, parserOptions);
         }
 
         /*

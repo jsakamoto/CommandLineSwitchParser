@@ -35,6 +35,27 @@ namespace CommandLineSwitchParser.Test
             args.Is("commit");
         }
 
+        [Theory(DisplayName = "Parse() - enum args with parser style")]
+        [InlineData("git", EnumParserStyle.LowerCase)]
+        [InlineData("GIT", EnumParserStyle.UpperCase)]
+        [InlineData("Git", EnumParserStyle.OriginalCase)]
+        [InlineData("Git", EnumParserStyle.OriginalCase | EnumParserStyle.LowerCase)]
+        [InlineData("GIT", EnumParserStyle.LowerCase | EnumParserStyle.UpperCase)]
+        [InlineData("GIT", EnumParserStyle.OriginalCase | EnumParserStyle.UpperCase)]
+        [InlineData("gIt", EnumParserStyle.IgnoreCase)]
+        [InlineData("giT", EnumParserStyle.IgnoreCase | EnumParserStyle.LowerCase)]
+        [InlineData("GiT", EnumParserStyle.IgnoreCase | EnumParserStyle.UpperCase)]
+        [InlineData("gIT", EnumParserStyle.IgnoreCase | EnumParserStyle.OriginalCase)]
+        public void Parse_Enum_with_ParserStyle_Test(string enumValueText, EnumParserStyle enumParserStyle)
+        {
+            var args = new[] { "-t", enumValueText, "commit" };
+            var options = CommandLineSwitch.Parse<VCSCommandOptions>(
+                ref args,
+                parserOptions => parserOptions.EnumParserStyle = enumParserStyle);
+            options.Type.Is(VCSTypes.Git);
+            args.Is("commit");
+        }
+
         [Fact(DisplayName = "Parse() - long name only")]
         public void Parse_LongNameOnly_Test()
         {
@@ -163,6 +184,30 @@ namespace CommandLineSwitchParser.Test
             e.ParserError.Parameter.Is("Git");
             e.ParserError.ExpectedParameterType.Is(typeof(VCSTypes));
             args.Is(commandline.Split(' '));
+        }
+
+        [Theory(DisplayName = "Parse() - Invalid parameter format - enum with parser style")]
+        [InlineData("Git", "git, svn", EnumParserStyle.LowerCase)]
+        [InlineData("git", "GIT, SVN", EnumParserStyle.UpperCase)]
+        [InlineData("git", "Git, SVN", EnumParserStyle.OriginalCase)]
+        [InlineData("GIT", "git, Git, svn, SVN", EnumParserStyle.OriginalCase | EnumParserStyle.LowerCase)]
+        [InlineData("Git", "git, GIT, svn, SVN", EnumParserStyle.UpperCase | EnumParserStyle.LowerCase)]
+        [InlineData("giT", "git, Git, GIT, svn, SVN", EnumParserStyle.OriginalCase | EnumParserStyle.UpperCase | EnumParserStyle.LowerCase)]
+        [InlineData("hg", "Git, SVN", EnumParserStyle.IgnoreCase)]
+        public void Parse_InvalidParameterFormat_Enum_with_ParserStyle_Test(string enumValueText, string expectedValues, EnumParserStyle enumParserStyle)
+        {
+            var args = new[] { "--type", enumValueText, "-z" };
+            var e = Assert.Throws<InvalidCommandLineSwitchException>(() =>
+            {
+                var options = CommandLineSwitch.Parse<VCSCommandOptions>(ref args, parserOptions => parserOptions.EnumParserStyle = enumParserStyle);
+            });
+
+            e.Message.Is($"The parameter of --type is not the one of {expectedValues}.");
+            e.ParserError.ErrorType.Is(ErrorTypes.InvalidParameterFormat);
+            e.ParserError.OptionName.Is("--type");
+            e.ParserError.Parameter.Is(enumValueText);
+            e.ParserError.ExpectedParameterType.Is(typeof(VCSTypes));
+            args.Is("--type", enumValueText, "-z");
         }
 
         [Fact(DisplayName = "Parse() - parameter overlow - int")]

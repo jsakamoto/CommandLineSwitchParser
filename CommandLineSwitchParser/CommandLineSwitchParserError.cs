@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Linq;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace CommandLineSwitchParser
 {
@@ -17,12 +15,15 @@ namespace CommandLineSwitchParser
 
         public Type ExpectedParameterType { get; }
 
-        internal CommandLineSwitchParserError(ErrorTypes errorType, string optionName, string parameter, Type expectedParameterType)
+        private CommandLineSwitchParserOptions ParserOptions { get; }
+
+        internal CommandLineSwitchParserError(ErrorTypes errorType, string optionName, string parameter, Type expectedParameterType, CommandLineSwitchParserOptions parserOptions)
         {
             ErrorType = errorType;
             OptionName = optionName;
             Parameter = parameter;
             ExpectedParameterType = expectedParameterType;
+            ParserOptions = parserOptions;
         }
 
         public override string ToString()
@@ -60,8 +61,25 @@ namespace CommandLineSwitchParser
 
             if (expectedParameterType.GetTypeInfo().IsEnum)
             {
-                var enumNames = string.Join(", ", Enum.GetNames(expectedParameterType).Select(name => name.ToLower()));
-                return $"the one of {enumNames}";
+                var originalEnumNames = Enum.GetNames(expectedParameterType);
+                var enumParserStyle = ParserOptions.EnumParserStyle;
+                var enumNames = Enumerable.Empty<string>();
+
+                if (enumParserStyle.HasFlag(EnumParserStyle.IgnoreCase) || enumParserStyle.HasFlag(EnumParserStyle.OriginalCase))
+                {
+                    enumNames = enumNames.Concat(originalEnumNames);
+                }
+                if (enumParserStyle.HasFlag(EnumParserStyle.LowerCase))
+                {
+                    enumNames = enumNames.Concat(originalEnumNames.Select(name => name.ToLower()));
+                }
+                if (enumParserStyle.HasFlag(EnumParserStyle.UpperCase))
+                {
+                    enumNames = enumNames.Concat(originalEnumNames.Select(name => name.ToUpper()));
+                }
+
+                enumNames = enumNames.OrderBy(x => x).Distinct();
+                return $"the one of {string.Join(", ", enumNames)}";
             }
 
             return expectedParameterType.Name;
