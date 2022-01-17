@@ -8,7 +8,7 @@ What you should do is only define your option class and write code like "`var op
 
 There is no need to annotate your option class with any attributes.
 
-![eye catch](.asset/eye-catch.png)
+![eye catch](https://raw.githubusercontent.com/jsakamoto/CommandLineSwitchParser/master/.asset/eye-catch.png)
 
 ## Install
 
@@ -189,6 +189,10 @@ So I have no plan at this time.
 
 If you need those features, you may consider using [Microsoft.Extensions.CommandLineUtils](https://www.nuget.org/packages/Microsoft.Extensions.CommandLineUtils/) ([see also](https://msdn.microsoft.com/magazine/mt763239.aspx)), or choose one of the many libraries published on NuGet that was tagged with "commandline" (search result is [here](https://www.nuget.org/packages?q=Tags%3A%22commandline%22)).
 
+## Release Notes
+
+[Release notes](https://github.com/jsakamoto/CommandLineSwitchParser/blob/master/RELEASE-NOTES.txt)
+
 ## License
 
-[Mozilla Public License, version 2.0](LICENSE)
+[Mozilla Public License, version 2.0](https://github.com/jsakamoto/CommandLineSwitchParser/blob/master/LICENSE)
