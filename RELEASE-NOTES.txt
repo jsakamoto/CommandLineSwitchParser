@@ -1,0 +1,17 @@
+﻿v.1.0.0
+- Official public 1st release.
+- Fix: typo of "ErrorTypes.UnknownOption".
+
+v.0.5.0
+- Add enum type property support!
+- Disallow ambiguous short name of switch/option.
+
+v.0.4.0
+- Add "TryParse()" static method.
+- Implement parsing error handling.
+
+v.0.3.0
+- .NET Standard support
+
+v.0.2.0
+- Beta release
