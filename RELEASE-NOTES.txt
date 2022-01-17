@@ -1,4 +1,7 @@
-﻿v.1.0.0
+﻿v.1.1.0
+- Improve: added parser options and allowed users to change enum parsing style.
+
+v.1.0.0
 - Official public 1st release.
 - Fix: typo of "ErrorTypes.UnknownOption".
 
